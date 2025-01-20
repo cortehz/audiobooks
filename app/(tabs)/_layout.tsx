@@ -30,6 +30,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <LibraryBig color={color} />,
         }}
       />
+
       <Tabs.Screen
         name='bookmarks'
         options={{

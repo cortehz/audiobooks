@@ -26,6 +26,5 @@
     },
     "plugins": ["expo-secure-store", "expo-router"],
     "scheme": "audiobookai"
-  },
-  "scheme": "audiobookai"
+  }
 }

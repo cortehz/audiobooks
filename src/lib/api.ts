@@ -317,7 +317,7 @@ export class AudiobookService {
   }
 }
 
-export const audioBooksData = {
+export const audioBooksData: Audiobook = {
   id: '1594',
   title: 'Letters from Egypt',
   description:
@@ -335,6 +335,7 @@ export const audioBooksData = {
   url_other: '',
   totaltime: '13:00:55',
   totaltimesecs: 46855,
+  narrator: 'Samuel Omanchi',
   authors: [
     {
       id: '4574',

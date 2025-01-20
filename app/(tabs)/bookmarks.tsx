@@ -92,8 +92,11 @@ const Page: React.FC<PlayerScreenProps> = ({
             {item.title}
           </Text>
           {item.authors && item.authors.length > 0 ? (
-            item.authors.map((author) => (
-              <Text className='text-base text-gray-700'>
+            item.authors.map((author, i) => (
+              <Text
+                className='text-base text-gray-700'
+                key={`${author.id}-${i}`}
+              >
                 {author.first_name} {author.last_name}
               </Text>
             ))
