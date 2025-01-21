@@ -50,7 +50,11 @@ export default function HomeTab() {
           <Text className='text-base font-medium'>
             {lastListened.length > 0 ? 'Last listened' : 'All books'}
           </Text>
-          <Pressable onPress={() => {}}>
+          <Pressable
+            onPress={() => {
+              router.push('/books/all');
+            }}
+          >
             <Text className='text-blue-600  font-semibold text-sm'>
               View all
             </Text>
@@ -71,7 +75,11 @@ export default function HomeTab() {
 
         <View className='flex-row justify-between items-center'>
           <Text className='text-base font-medium'>Favourites</Text>
-          <Pressable onPress={() => {}}>
+          <Pressable
+            onPress={() => {
+              router.push('/favourites');
+            }}
+          >
             <Text className='text-blue-600 font-semibold text-sm'>
               View all
             </Text>

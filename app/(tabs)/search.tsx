@@ -65,7 +65,7 @@ const Page: React.FC<PlayerScreenProps> = ({
     fetchNextPage,
     hasNextPage,
   } = useGetInfiniteBooks({
-    query: debouncedSearchQuery,
+    searchQuery: debouncedSearchQuery,
     enabled: !!debouncedSearchQuery,
   });
 

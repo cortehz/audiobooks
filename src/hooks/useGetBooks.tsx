@@ -3,24 +3,24 @@ import { LibriVoxResponse } from 'src/lib/api';
 import { api } from 'src/lib/api-helper';
 
 export function useGetInfiniteBooks({
-  query,
+  searchQuery,
   offset = 0,
   limit = 20,
   enabled = true,
 }: {
-  query: string;
+  searchQuery: string;
   enabled: boolean;
   offset?: number;
   limit?: number;
 }) {
   return useInfiniteQuery({
-    queryKey: ['books', query, offset, limit],
+    queryKey: ['books', searchQuery, offset, limit],
     queryFn: async () => {
       const queryString = `?offset=${offset}&coverart=1&limit=${limit}&format=json`;
 
       const { data, error } = await api.get<LibriVoxResponse>(
-        query
-          ? `title/^${encodeURIComponent(query)}${queryString}`
+        searchQuery
+          ? `title/^${encodeURIComponent(searchQuery)}${queryString}`
           : queryString
       );
       if (error) {

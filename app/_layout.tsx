@@ -30,6 +30,10 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         <Stack.Screen
+          name='books/[type]'
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
+        />
+        <Stack.Screen
           name='book/[id]'
           options={{
             presentation: 'fullScreenModal', // This makes the screen cover the entire screen

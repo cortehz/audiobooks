@@ -32,7 +32,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name='bookmarks'
+        name='favourites'
         options={{
           tabBarIcon: ({ color }) => <Bookmark color={color} />,
           headerShown: false,
