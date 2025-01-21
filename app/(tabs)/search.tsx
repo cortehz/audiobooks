@@ -1,8 +1,8 @@
+import { debounce } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   RefreshControl,
   SafeAreaView,
   Text,
@@ -11,9 +11,10 @@ import {
   View,
 } from 'react-native';
 // import { Audio } from 'expo-av';
-import { debounce } from 'lodash';
+import { BookCard } from '@components/common/book-card';
+import { useGetInfiniteBooks } from '@hooks/useGetBooks';
 import { Pause, Play, SkipBack, SkipForward } from 'lucide-react-native';
-import { Audiobook, AudiobookService } from '../../src/lib/api';
+import { Audiobook } from '../../src/lib/api';
 
 // Types remain the same as previous version
 interface PlayerScreenProps {
@@ -34,10 +35,9 @@ const Page: React.FC<PlayerScreenProps> = ({
   supabaseUrl,
   supabaseKey,
 }) => {
-  // State declarations remain the same
-  const [books, setBooks] = useState<Audiobook[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+
   const [refreshing, setRefreshing] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Audiobook | null>(null);
   const [playerState, setPlayerState] = useState<AudioPlayerState>({
@@ -48,75 +48,26 @@ const Page: React.FC<PlayerScreenProps> = ({
   });
   const [sound, setSound] = useState<any>(null);
 
-  // Service initialization and handlers remain the same
-  const audiobookService = new AudiobookService();
-
-  // Previous handler implementations remain the same
   const handleSearch = useCallback(
-    debounce(async (query: string) => {
+    debounce((query: string) => {
       if (!query.trim()) {
-        // loadFeaturedBooks();
         return;
       }
-      setLoading(true);
-      try {
-        const results = await audiobookService.searchBooks(query);
-        setBooks(results);
-      } catch (error) {
-        console.error('Search error:', error);
-      } finally {
-        setLoading(false);
-      }
+      setDebouncedSearchQuery(query);
     }, 500),
     []
   );
 
-  console.log(books, 'books');
-
-  // Previous methods remain the same
-  // loadFeaturedBooks, onRefresh, loadAudio, etc.
-
-  const renderBookItem = ({ item }: { item: Audiobook }) => (
-    <TouchableOpacity
-      className='flex-row p-4 mb-4 bg-white rounded-lg shadow-sm border border-gray-100'
-      //   onPress={() => loadAudio(item)}
-    >
-      <Image
-        source={{ uri: item.coverart_thumbnail }}
-        className='w-24 h-36 rounded'
-        // defaultSource={require('./assets/default-cover.png')}
-      />
-      <View className='flex-1 ml-4 justify-between'>
-        <View>
-          <Text className='text-lg font-bold text-gray-900' numberOfLines={2}>
-            {item.title}
-          </Text>
-          {item.authors && item.authors.length > 0 ? (
-            item.authors.map((author, i) => (
-              <Text
-                className='text-base text-gray-700'
-                key={`${author.id}-${i}`}
-              >
-                {author.first_name} {author.last_name}
-              </Text>
-            ))
-          ) : (
-            <Text className='text-base text-gray-700'>Unknown</Text>
-          )}
-          <Text className='text-sm text-gray-500'>
-            Narrated by {item.narrator}
-          </Text>
-        </View>
-
-        <View>
-          <Text className='text-sm text-gray-600'>{item.totaltime}</Text>
-          <Text className='text-sm text-gray-500'>
-            {item.num_sections} sections • {item.language}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  const {
+    data: books,
+    isPending,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+  } = useGetInfiniteBooks({
+    query: debouncedSearchQuery,
+    enabled: !!debouncedSearchQuery,
+  });
 
   return (
     <SafeAreaView className='flex-1 bg-gray-50'>
@@ -136,15 +87,22 @@ const Page: React.FC<PlayerScreenProps> = ({
         </View>
       </View>
 
-      {loading ? (
+      {isPending ? (
         <View className='flex-1 justify-center items-center'>
           <ActivityIndicator size='large' color='#6366F1' />
         </View>
-      ) : (
+      ) : books && books.pages.length > 0 ? (
         <FlatList
-          data={books}
-          renderItem={renderBookItem}
-          keyExtractor={(item) => item.id.toString()}
+          data={books ? books.pages.flat(1) : []}
+          renderItem={({ item }) => (
+            <View
+              className=' mb-4'
+              //   onPress={() => loadAudio(item)}
+            >
+              <BookCard book={item} />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -153,6 +111,10 @@ const Page: React.FC<PlayerScreenProps> = ({
           }
           contentContainerStyle={{ padding: 16 }}
         />
+      ) : (
+        <View className='flex-1 justify-center items-center'>
+          <Text className='text-lg text-gray-500'>No results found</Text>
+        </View>
       )}
 
       {selectedBook && (

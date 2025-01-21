@@ -19,7 +19,8 @@
       "@components/*": ["./src/components/*"],
       "@screens/*": ["./src/screens/*"],
       "@stores/*": ["./src/stores/*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@hooks/*": ["./src/hooks/*"]
     }
   },
   "exclude": ["node_modules"]

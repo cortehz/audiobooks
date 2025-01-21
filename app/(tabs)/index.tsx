@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useGetBooks } from 'src/hooks/useGetBooks';
 import { Audiobook, audioBooksData } from 'src/lib/api';
-
 const user = {
   firstname: 'Julia',
 };
@@ -19,6 +19,9 @@ export const allBooks = Array.from({ length: 3 }).map(() => audioBooksData);
 
 export default function HomeTab() {
   const router = useRouter();
+
+  const { data: books } = useGetBooks({ query: '', limit: 3 });
+
   return (
     <View className='bg-white h-full'>
       <View className='m-6 gap-6'>
@@ -60,7 +63,7 @@ export default function HomeTab() {
               ? lastListened.map((book, i) => {
                   return <BookCard book={book} key={i} />;
                 })
-              : allBooks.map((book, i) => {
+              : books?.map((book, i) => {
                   return <BookCard book={book} key={`${i}-${book.id}`} />;
                 })}
           </View>

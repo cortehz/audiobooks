@@ -32,8 +32,8 @@ interface LibriVoxBook {
   sections: LibriVoxSection[];
 }
 
-interface LibriVoxResponse {
-  books: LibriVoxBook[];
+export interface LibriVoxResponse {
+  books: Audiobook[];
 }
 
 // Types for our transformed data
@@ -95,33 +95,13 @@ interface DownloadedSection {
 
 export class AudiobookService {
   private supabase: SupabaseClient;
-  private readonly librivoxBaseUrl: string;
   private readonly internetArchiveUrl: string;
+  private readonly librivoxBaseUrl: string;
 
   constructor() {
     this.supabase = supabase;
     this.librivoxBaseUrl = 'https://librivox.org/api/feed/audiobooks/';
     this.internetArchiveUrl = 'https://archive.org/download';
-  }
-
-  async searchBooks(
-    query: string,
-    offset: number = 0,
-    limit: number = 20
-  ): Promise<Audiobook[]> {
-    try {
-      const response = await fetch(
-        `${this.librivoxBaseUrl}` +
-          `title/^${encodeURIComponent(query)}` +
-          `?offset=${offset}&coverart=1&limit=${limit}&format=json`
-      );
-
-      const data = (await response.json()) as LibriVoxResponse;
-      return this.transformLibriVoxBooks(data.books || []);
-    } catch (error) {
-      console.error('Error searching LibriVox:', error);
-      throw error;
-    }
   }
 
   async getFeaturedBooks(limit: number = 20): Promise<Audiobook[]> {
