@@ -3,7 +3,6 @@ import { FlatList, SafeAreaView, Text, View } from 'react-native';
 // import { Audio } from 'expo-av';
 import { BookCard } from '@components/common/book-card';
 import { Link } from 'expo-router';
-import { Search } from 'lucide-react-native';
 import { Audiobook } from '../../src/lib/api';
 
 interface AudioPlayerState {
@@ -17,8 +16,8 @@ const Page = () => {
   const fav: Audiobook[] = [];
 
   return (
-    <SafeAreaView className='flex-1 bg-white'>
-      <View className='p-4'>
+    <SafeAreaView className='bg-white flex-1'>
+      <View className='p-4 flex-1'>
         <Text className='text-xl font-bold'>My Favourites</Text>
         {fav.length > 0 ? (
           <FlatList
@@ -28,18 +27,13 @@ const Page = () => {
           />
         ) : (
           <View className='flex-1 justify-center items-center'>
-            <Text className='text-center text-gray-500'>No favourites yet</Text>
-            <Link
-              href='/search'
-              asChild
-              className='flex-row items-center gap-2'
-            >
-              <>
-                <Text className='text-blue-600 font-semibold text-sm'>
-                  Find books
-                </Text>
-                <Search size={20} color='#6B7280' />
-              </>
+            <Text className='text-center text-gray-500 text-4xl my-2'>
+              No favourites yet
+            </Text>
+            <Link href='/allbooks/all' asChild>
+              <Text className='text-blue-600 font-semibold text-2xl'>
+                Find books
+              </Text>
             </Link>
           </View>
         )}

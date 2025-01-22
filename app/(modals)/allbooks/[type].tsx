@@ -25,6 +25,8 @@ export default function BooksScreen() {
     enabled: true,
   });
 
+  if (!type) return null;
+
   function GoBack() {
     return (
       <View className='flex-row items-center justify-between px-6'>

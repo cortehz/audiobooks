@@ -27,14 +27,15 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         <Stack.Screen
-          name='books/[type]'
+          name='(modals)/allbooks/[type]'
           options={{ headerShown: false, presentation: 'fullScreenModal' }}
+          initialParams={{ type: 'all' }}
         />
         <Stack.Screen
-          name='book/[id]'
+          name='(modals)/book/[id]'
           options={{
             presentation: 'fullScreenModal', // This makes the screen cover the entire screen
             headerShown: false, // Optional: Hide the header if you want a full-screen experience

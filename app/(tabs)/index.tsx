@@ -1,7 +1,6 @@
 import { BookCard } from '@components/common/book-card';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import {
-  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -50,15 +49,11 @@ export default function HomeTab() {
           <Text className='text-base font-medium'>
             {lastListened.length > 0 ? 'Last listened' : 'All books'}
           </Text>
-          <Pressable
-            onPress={() => {
-              router.push('/books/all');
-            }}
-          >
+          <Link href='/allbooks/all' asChild>
             <Text className='text-blue-600  font-semibold text-sm'>
               View all
             </Text>
-          </Pressable>
+          </Link>
         </View>
 
         <ScrollView>
@@ -75,15 +70,11 @@ export default function HomeTab() {
 
         <View className='flex-row justify-between items-center'>
           <Text className='text-base font-medium'>Favourites</Text>
-          <Pressable
-            onPress={() => {
-              router.push('/favourites');
-            }}
-          >
+          <Link href='/favourites' asChild>
             <Text className='text-blue-600 font-semibold text-sm'>
               View all
             </Text>
-          </Pressable>
+          </Link>
         </View>
 
         <ScrollView>
