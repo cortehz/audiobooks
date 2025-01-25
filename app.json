@@ -24,7 +24,16 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-secure-store", "expo-router"],
+    "plugins": [
+      "expo-secure-store",
+      "expo-router",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow AudiobookAI to access your microphone."
+        }
+      ]
+    ],
     "scheme": "audiobookai"
   }
 }

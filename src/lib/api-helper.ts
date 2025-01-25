@@ -12,7 +12,7 @@ interface ApiResponse<T> {
   status: number;
 }
 
-const baseUrl = 'https://librivox.org/api/feed/audiobooks/';
+const baseUrl = 'https://librivox.org/api/feed';
 // Create the base fetcher
 const fetchWithConfig = async <T>(
   endpoint: string,

@@ -16,7 +16,7 @@ export function useGetInfiniteBooks({
   return useInfiniteQuery({
     queryKey: ['books', searchQuery, offset, limit],
     queryFn: async () => {
-      const queryString = `?offset=${offset}&coverart=1&limit=${limit}&format=json`;
+      const queryString = `/audiobooks/?offset=${offset}&coverart=1&limit=${limit}&format=json`;
 
       const { data, error } = await api.get<LibriVoxResponse>(
         searchQuery
@@ -55,7 +55,7 @@ export function useGetBooks({
   return useQuery({
     queryKey: ['books', query, offset, limit],
     queryFn: async () => {
-      const queryString = `?offset=${offset}&coverart=1&limit=${limit}&format=json`;
+      const queryString = `/audiobooks/?offset=${offset}&coverart=1&limit=${limit}&format=json`;
       const { data, error } = await api.get<LibriVoxResponse>(
         query
           ? `title/^${encodeURIComponent(query)}${queryString}`
@@ -80,7 +80,7 @@ export function useGetBook({ id }: { id: string }) {
     queryKey: ['book', id],
     queryFn: async () => {
       const { data, error } = await api.get<LibriVoxResponse>(
-        `?id=${id}&coverart=1&format=json`
+        `/audiobooks/?id=${id}&coverart=1&format=json`
       );
 
       if (error) {

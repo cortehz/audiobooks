@@ -1,3 +1,4 @@
+import AudioPlayer from '@components/common/audio-player';
 import { useGetBook } from '@hooks/useGetBooks';
 import { Link, router, useLocalSearchParams } from 'expo-router';
 import { ArrowLeft, Headset, Heart } from 'lucide-react-native';
@@ -39,8 +40,6 @@ export default function BookDetailsScreen() {
 
   const { data: book } = useGetBook({ id: id as string });
 
-  console.log(book?.authors, 'book here');
-
   return (
     <Animated.View entering={FadeIn} className='flex-1'>
       {/* Dismiss modal when pressing outside */}
@@ -76,7 +75,6 @@ export default function BookDetailsScreen() {
             </View>
           )}
         </View>
-
         <Pressable className='flex-row gap-4 justify-center h-16 -mt-8 bg-blue-500 rounded-[16px] p-4 w-3/4 m-auto'>
           <Text className='text-center text-white text-lg font-bold '>
             Start Listening
@@ -84,6 +82,11 @@ export default function BookDetailsScreen() {
 
           <Headset color='white' />
         </Pressable>
+        {book && (
+          <View className='mt-8'>
+            <AudioPlayer audiobook={book} />
+          </View>
+        )}
       </Animated.View>
     </Animated.View>
   );
