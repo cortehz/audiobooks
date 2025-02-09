@@ -5,7 +5,14 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './app/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        crimson: ['CrimsonText'],
+        'crimson-semibold': ['CrimsonText-SemiBold'],
+        'crimson-bold': ['CrimsonText-Bold'],
+        courier: ['CourierPrime'],
+      },
+    },
   },
   plugins: [],
 };

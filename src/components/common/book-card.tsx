@@ -1,5 +1,4 @@
 import { useRouter } from 'expo-router';
-import { Ellipsis, Loader2 } from 'lucide-react-native';
 import { Image, Pressable, Text, View } from 'react-native';
 import { Audiobook } from 'src/lib/api';
 type BookCardProps = {
@@ -14,29 +13,24 @@ export function BookCard(props: BookCardProps) {
       onPress={() => {
         router.push(`/book/${book.id}`);
       }}
-      className='flex-row items-start gap-6'
+      className='items-start gap-2'
     >
-      <Image
-        source={{ uri: book.coverart_thumbnail }}
-        className='w-20 h-20 rounded-xl bg-slate-100'
-        defaultSource={require('assets/adaptive-icon.png')}
-      />
+      <View className='border border-gray-800'>
+        <Image
+          source={{ uri: book.coverart_thumbnail }}
+          className='w-32 h-40 bg-slate-100 m-[2px]'
+          defaultSource={require('assets/adaptive-icon.png')}
+        />
+      </View>
       <View>
-        <Text className='text-xl font-medium'>{book.title}</Text>
+        <Text className='text-sm font-medium w-32 text-wrap'>{book.title}</Text>
         {book.authors.map((author, i) => {
           return (
-            <Text className='text-gray-500' key={`${author.id}-${i}`}>
+            <Text className='text-gray-500 text-xs' key={`${author.id}-${i}`}>
               {author.first_name.trimStart()} {author.last_name}
             </Text>
           );
         })}
-      </View>
-      <View className='ml-auto'>
-        <Pressable>
-          <Ellipsis color={'#94a3b8'} />
-        </Pressable>
-
-        <Loader2 color={'#2563eb'} />
       </View>
     </Pressable>
   );

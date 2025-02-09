@@ -22,7 +22,7 @@ export default function HomeTab() {
   const { data: books } = useGetBooks({ query: '', limit: 3 });
 
   return (
-    <View className='bg-white h-full'>
+    <View className='bg-[#FEEFD7] h-full'>
       <View className='m-6 gap-6'>
         <View>
           <SafeAreaView />
@@ -30,7 +30,7 @@ export default function HomeTab() {
             Hey, <Text className='font-bold'>{user.firstname}</Text>
           </Text>
           <Text className='text-xl'>What are you listening to today?</Text>
-          <View className='bg-slate-100 p-6 rounded-2xl items-center my-6 py-10'>
+          <View className=' border-gray-900 p-6 border items-center my-6 py-10'>
             {lastListened[0]?.id ? (
               <BookCard book={lastListened[0]} />
             ) : (
@@ -38,7 +38,7 @@ export default function HomeTab() {
                 onPress={() => {
                   router.push('/search');
                 }}
-                className='border border-gray-500 w-28 px-2 py-2 rounded-lg'
+                className='border border-gray-800 px-8 py-4 bg-orange-600'
               >
                 <Text className='text-center'>Find book</Text>
               </TouchableOpacity>
@@ -56,8 +56,8 @@ export default function HomeTab() {
           </Link>
         </View>
 
-        <ScrollView>
-          <View className='gap-4'>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View className='flex-row gap-4'>
             {lastListened.length > 0
               ? lastListened.map((book, i) => {
                   return <BookCard book={book} key={i} />;
@@ -77,8 +77,8 @@ export default function HomeTab() {
           </Link>
         </View>
 
-        <ScrollView>
-          <View className='gap-4'>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View className='flex-row gap-4'>
             {lastListened.length > 0
               ? lastListened.map((book, i) => {
                   return <BookCard book={book} key={i} />;

@@ -10,6 +10,7 @@ import {
   RewindIcon,
 } from 'lucide-react-native';
 import * as rssParser from 'react-native-rss-parser';
+import { useAudioStorage } from '../../hooks/useAudioStorage';
 
 interface Author {
   id: string;
@@ -52,6 +53,9 @@ export default function AudioPlayer({ audiobook }: AudioPlayerProps) {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isBuffering, setIsBuffering] = useState(false);
+  const { savePlaybackState, getPlaybackState } = useAudioStorage();
+
+  console.log(getPlaybackState(audiobook.id), 'getPlaybackState1');
 
   useEffect(() => {
     fetchAudioUrls();
@@ -84,6 +88,10 @@ export default function AudioPlayer({ audiobook }: AudioPlayerProps) {
       };
     }
   }, [sound]);
+
+  useEffect(() => {
+    loadSavedState();
+  }, []);
 
   async function fetchAudioUrls() {
     try {
@@ -118,12 +126,32 @@ export default function AudioPlayer({ audiobook }: AudioPlayerProps) {
     }
   };
 
+  const loadSavedState = async () => {
+    const savedState = await getPlaybackState(audiobook.id);
+    console.log(savedState, 'savedState2');
+    if (savedState) {
+      setCurrentTrackIndex(savedState.trackIndex);
+      if (sound) {
+        await sound.setPositionAsync(savedState.position);
+      }
+    }
+  };
+
   const onPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
     if (status.isLoaded) {
       setPosition(status.positionMillis);
       setDuration(status.durationMillis ?? 0);
       setIsPlaying(status.isPlaying);
       setIsBuffering(status.isBuffering);
+
+      // Save playback state every 5 seconds
+      if (status.positionMillis % 5000 < 100) {
+        savePlaybackState(audiobook.id, {
+          position: status.positionMillis,
+          trackIndex: currentTrackIndex,
+          lastPlayedAt: new Date().toISOString(),
+        });
+      }
 
       console.log('Playback Status:', {
         position: status.positionMillis,

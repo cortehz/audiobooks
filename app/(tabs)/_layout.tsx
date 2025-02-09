@@ -5,20 +5,20 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: 'blue',
-        tabBarShowLabel: false,
+        tabBarActiveTintColor: '#ea580c',
+        tabBarInactiveTintColor: '#1f2937',
+
         tabBarStyle: {
-          height: 72,
-          borderWidth: 0,
-          borderRadius: 16,
-          margin: 16,
+          height: 96,
+          borderTopWidth: 1,
+          borderTopColor: '#1f2937',
+          backgroundColor: '#FEEFD7',
           boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-          marginBottom: 28,
-          paddingTop: 16,
-          maxWidth: 420,
+          paddingTop: 8,
+          paddingBottom: 16,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 10,
           fontWeight: 'bold',
         },
       }}
@@ -26,6 +26,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='index'
         options={{
+          title: 'Home',
           headerShown: false,
           tabBarIcon: ({ color }) => <LibraryBig color={color} />,
         }}
@@ -34,6 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='favourites'
         options={{
+          title: 'Favourites',
           tabBarIcon: ({ color }) => <Bookmark color={color} />,
           headerShown: false,
         }}
@@ -41,6 +43,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='search'
         options={{
+          title: 'Search',
           tabBarIcon: ({ color }) => <Search color={color} />,
           headerShown: false,
         }}
@@ -48,6 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='profile'
         options={{
+          title: 'Profile',
           tabBarIcon: ({ color }) => <UserRound color={color} />,
           headerShown: false,
         }}

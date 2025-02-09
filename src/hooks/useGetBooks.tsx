@@ -80,7 +80,7 @@ export function useGetBook({ id }: { id: string }) {
     queryKey: ['book', id],
     queryFn: async () => {
       const { data, error } = await api.get<LibriVoxResponse>(
-        `/audiobooks/?id=${id}&coverart=1&format=json`
+        `/audiobooks/?id=${id}&coverart=1&format=json&extended=1`
       );
 
       if (error) {

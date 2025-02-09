@@ -32,7 +32,8 @@
         {
           "microphonePermission": "Allow AudiobookAI to access your microphone."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "scheme": "audiobookai"
   }
