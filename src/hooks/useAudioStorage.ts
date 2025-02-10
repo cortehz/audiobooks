@@ -38,6 +38,8 @@ export function useAudioStorage() {
   const getSavedBooks = async (): Promise<SavedBook[]> => {
     try {
       const books = await AsyncStorage.getItem(SAVED_BOOKS_KEY);
+
+      console.log({ books }, 'books played');
       return books ? JSON.parse(books) : [];
     } catch (error) {
       console.error('Error getting saved books:', error);

@@ -103,7 +103,7 @@ export default function BookDetailsScreen() {
             </Pressable>
             <Pressable className='flex-1 gap-2 items-center p-4'>
               <ListPlus color='black' />
-              <Text variant='body'>Save</Text>
+              <Text variant='body'>Add to List</Text>
             </Pressable>
           </View>
           <View className='w-full gap-2'>
